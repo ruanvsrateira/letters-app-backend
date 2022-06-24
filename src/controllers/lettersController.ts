@@ -44,13 +44,9 @@ class LetterController {
             return res.json({ error: "not received id param" });
         }
 
-        if(typeof id == 'number') {
-            const letter_edited = await editLetterService({ id, name, author, letter });
+        const letter_edited = await editLetterService({ id: Number(id), name, author, letter });
 
-            return res.json({ letter_edited });
-        } else {
-            return res.json({ error: "typeof of id is different of number" });
-        }
+        return res.json({ letter_edited });
         
     }
 };

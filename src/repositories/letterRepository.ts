@@ -1,6 +1,5 @@
 import { prismaCliente } from "../database/client/prismaClient";
 import { Letter } from '../entities/Letter';
-import { ILetter } from "../interfaces/letter";
 
 class LetterRepository{
     constructor() {};
