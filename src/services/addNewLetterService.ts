@@ -1,8 +1,8 @@
 import { ILetter } from '../interfaces/letter';
-import LetterRepository from '../repositories/letterRepository';
 import { Letter } from '../entities/Letter';
+import LetterRepository from '../repositories/letterRepository';
 
-const main = async(data: ILetter) => {
+const main = async(data: ILetter) : Promise<Letter> => {
     const letter = new Letter(data);
 
     const letter_created = LetterRepository.addNewLetter(letter);

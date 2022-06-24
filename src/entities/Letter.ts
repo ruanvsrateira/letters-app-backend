@@ -1,5 +1,5 @@
 export class Letter {
-    public id?: string ;
+    public id?: number ;
     public name!: string;
     public author!: string;
     public letter!: string;
