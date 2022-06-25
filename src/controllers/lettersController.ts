@@ -5,34 +5,51 @@ import getAllLettersService from '../services/getAllLettersService';
 import deleteLetterService from '../services/deleteLetterService';
 import editLetterService from '../services/editLetterService';
 
-import { Letter } from '../entities/Letter';
-
 class LetterController {
     constructor() {};
 
-    async index(req: Request, res: Response) : Promise<Response>{
-        const letters = await getAllLettersService();
-    
-        return res.json({ letters });
+    async index(req: Request, res: Response) : Promise<Response> {
+        try {
+
+            const letters = await getAllLettersService();
+            return res.json({ letters });
+
+        } catch(e) {
+            
+            return res.json({ msg: `${e}` });
+
+        };
     };
 
-    async addNewLetter(req: Request, res: Response) : Promise<Response>{
+    async store(req: Request, res: Response) : Promise<Response> {
         const { name, author, letter } = req.body;
 
-        const letter_created = await addNewLetterService({ name, author, letter });
+        try {
 
-        return res.json({ letter_created });
+            const letter_created = await addNewLetterService({ name, author, letter });
+            
+            return res.json({ letter_created });
+
+        } catch (e) {
+
+            return res.json({ error: `${e}` })
+
+        };
     };
 
     async destroy(req: Request, res:Response) : Promise<Response>{
         const { id } = req.params;
 
         try {
+
             const letter_deleted = await deleteLetterService(Number(id));
 
             return res.json({ letter_deleted });
+
         }catch (e) {
-            return res.json({ error: "letter on this id not exist" });
+
+            return res.json({ error: `${e}` });
+
         };
     };
 
@@ -40,15 +57,18 @@ class LetterController {
         const { id } = req.params;
         const { name, author, letter } = req.body;
 
-        if(!id) {
-            return res.json({ error: "not received id param" });
-        }
+        try {
 
-        const letter_edited = await editLetterService({ id: Number(id), name, author, letter });
-
-        return res.json({ letter_edited });
+            const letter_edited = await editLetterService({ id: Number(id), name, author, letter });
         
-    }
+            return res.json({ letter_edited });
+
+        } catch(e) {
+
+            return res.json({ error: `${e}` });
+
+        };  
+    };
 };
 
 export default new LetterController();

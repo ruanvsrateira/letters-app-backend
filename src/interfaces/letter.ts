@@ -3,4 +3,4 @@ export interface ILetter {
     name: string,
     author: string,
     letter: string
-}
+};

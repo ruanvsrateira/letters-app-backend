@@ -1,17 +1,17 @@
-import { prismaCliente } from "../database/client/prismaClient";
+import { prismaClient } from "../database/client/prismaClient";
 import { Letter } from '../entities/Letter';
 
 class LetterRepository{
     constructor() {};
 
-    async getAllLetters() {
-        const letters = await prismaCliente.letter.findMany({});
+    async getAllLetters() : Promise<Letter[]> {
+        const letters = await prismaClient.letter.findMany({});
 
         return letters;
     };
 
-    async addNewLetter(letter: Letter) {
-        const letter_created = await prismaCliente.letter.create({
+    async addNewLetter(letter: Letter) : Promise<Letter> {
+        const letter_created = await prismaClient.letter.create({
             data: {
                 name: letter.name,
                 author: letter.author,
@@ -22,36 +22,34 @@ class LetterRepository{
         return letter_created;
     };
 
-    async deleteLetter(id: number) {
-        const letter = await prismaCliente.letter.findUnique({
+    async deleteLetter(id: number) : Promise<Letter> {
+        const letter_deleted = await prismaClient.letter.delete({
             where: { id }
         });
 
-        if (letter) {
-            const letter_deleted = await prismaCliente.letter.delete({
-                where: { id }
-            })
-
-            return letter_deleted;
-        } else {
-            throw new Error("letter on this id not exist");
-        };
+        return letter_deleted;
     };
 
-    async editLetter(data: Letter) {
-        if(data.id) {
-            const letter_edited = await prismaCliente.letter.update({
-                where: { id: data.id },
-                data: {
-                    name: data.name,
-                    author: data.author,
-                    letter: data.letter
-                },
-            });
+    async editLetter(data: Letter) : Promise<Letter> {
+        const letter_edited = await prismaClient.letter.update({
+            where: { id: data.id },
+            data: {
+                name: data.name,
+                author: data.author,
+                letter: data.letter
+            },
+        });
 
-            return letter_edited;
-        }
-    }
+        return letter_edited;
+    };
+
+    async existById(id: number) : Promise<Boolean> {
+        const letter = await prismaClient.letter.findUnique({
+            where: { id }
+        });
+
+        return letter ? true : false;
+    };
 };
 
 export default new LetterRepository();
