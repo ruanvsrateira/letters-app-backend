@@ -22,7 +22,7 @@
 <li><a href="https://expressjs.com/">Express</a></li>
 <li><a href="https://www.prisma.io/">Prisma</a></li>
 <li><a href="https://www.docker.com/">Docker</a></li>
-<li><a href="https://www.postgresql.org/">PostegreSQL</a></li>
+<li><a href="https://www.postgresql.org/">PostgreSQL</a></li>
 <li><a href="https://www.typescriptlang.org/">Typescript</a></li>
 
 <br>
